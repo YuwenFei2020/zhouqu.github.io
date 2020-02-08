@@ -1,0 +1,102 @@
+<!DOCTYPE HTML>
+<!--
+	Hyperspace by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Generic - Hyperspace by HTML5 UP</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+
+		<!-- Header -->
+			<header id="header">
+				<a href="index.html" class="title">Hyperspace</a>
+				<nav>
+					<ul>
+						<li><a href="index.html">Home</a></li>
+						<li><a href="generic.html" class="active">Generic</a></li>
+						<li><a href="elements.html">Elements</a></li>
+					</ul>
+				</nav>
+			</header>
+	
+	
+	    <h1>简易留言板</h1>
+        <textarea id="memo" cols="60" rows="10"></textarea>
+        <input type="button" value="追加内容" onclick="saveStorage('memo')" />
+        <input type="button" value="初始化" onclick="clearStorage('msg')" />
+        <hr />
+        <p id="msg"></p>
+        <script type="text/javascript">
+
+            function saveStorage(id) {
+                //获取textarea的value值
+                var data = document.getElementById(id).value;
+                //获取当前时间戳
+                var time = new Date().getTime();
+                //将时间戳作为键值，textarea的value值作为键值的内容保存在本地数据库
+                localStorage.setItem(time,data);
+                //保存成功后提示成功
+                console.log("数据已保存");
+                //设置loadStorage函数的传参（ID值）
+                loadStorage('msg');
+            }
+
+            function loadStorage(id) {
+                var result = '<table border="1">';
+                //遍历本地数据所有内容
+                for(var i = 0; i < localStorage.length; i++) {
+                    //获取每一条新增的键值
+                    var kes = localStorage.key(i);
+                    //获取新增键值的内容
+                    var value = localStorage.getItem(kes);
+                    //获取时间对象
+                    var date = new Date();
+                    //将时间戳转化为正常时间 Mon Jun 19 1972 11:12:44 GMT+0800 (中国标准时间) 的格式
+                    date.setTime(kes);
+                    //将转化后的内容变成字符串
+                    var datestr = date.toGMTString();
+                    //将所有新增内容添加到result变量中
+                    result += '<tr><td>' + value + '</td><td>' + datestr + '</td></tr>'
+                }
+                result += '</table>';
+                var target = document.getElementById(id);
+                //将所有内容添加到元素中显示
+                target.innerHTML = result;
+
+            }
+
+            function clearStorage() {
+                //清除本地储存所有内容
+                localStorage.clear();  
+                console.log("清除完毕");
+            }
+
+        </script>
+	
+		<!-- Footer -->
+			<footer id="footer" class="wrapper alt">
+				<div class="inner">
+					<ul class="menu">
+						<li>&copy; Untitled. All rights reserved.</li>
+					</ul>
+				</div>
+			</footer>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
